@@ -10,8 +10,8 @@ typedef struct {
     int deadline;
     int remT;
     int priority;
-    int next_arrival;
-    int next_deadline;
+    int nextA;
+    int nextD;
 } Task;
 
 // GCD and LCM functions
@@ -37,8 +37,8 @@ void insert(Task *tasks, int n) {
         scanf("%d %d %d %d", &tasks[i].bT, &tasks[i].period, &tasks[i].deadline, &tasks[i].priority);
         tasks[i].id = i + 1;
         tasks[i].remT = 0;
-        tasks[i].next_arrival = 0;
-        tasks[i].next_deadline = 0;
+        tasks[i].nextA = 0;
+        tasks[i].nextD = 0;
     }
 }
 
@@ -47,10 +47,10 @@ void rate_monotonic(Task *tasks, int n, int hyper_period) {
     for (int t = 0; t < hyper_period; t++) {
         int current = -1;
         for (int i = 0; i < n; i++) {
-            if (t == tasks[i].next_arrival) {
+            if (t == tasks[i].nextA) {
                 tasks[i].remT = tasks[i].bT;
-                tasks[i].next_arrival += tasks[i].period;
-                tasks[i].next_deadline = t + tasks[i].period;
+                tasks[i].nextA += tasks[i].period;
+                tasks[i].nextD = t + tasks[i].period;
             }
             if (tasks[i].remT > 0 && (current == -1 || tasks[i].period < tasks[current].period)) {
                 current = i;
@@ -70,12 +70,12 @@ void earliest_deadline_first(Task *tasks, int n, int hyper_period) {
     for (int t = 0; t < hyper_period; t++) {
         int current = -1;
         for (int i = 0; i < n; i++) {
-            if (t == tasks[i].next_arrival) {
+            if (t == tasks[i].nextA) {
                 tasks[i].remT = tasks[i].bT;
-                tasks[i].next_arrival += tasks[i].period;
-                tasks[i].next_deadline = t + tasks[i].deadline;
+                tasks[i].nextA += tasks[i].period;
+                tasks[i].nextD = t + tasks[i].deadline;
             }
-            if (tasks[i].remT > 0 && (current == -1 || tasks[i].next_deadline < tasks[current].next_deadline)) {
+            if (tasks[i].remT > 0 && (current == -1 || tasks[i].nextD < tasks[current].nextD)) {
                 current = i;
             }
         }
@@ -122,8 +122,8 @@ int main() {
 
     for (int i = 0; i < n; i++) {
         tasks[i].remT = 0;
-        tasks[i].next_arrival = 0;
-        tasks[i].next_deadline = 0;
+        tasks[i].nextA = 0;
+        tasks[i].nextD = 0;
     }
 
     earliest_deadline_first(tasks, n, hyper_period);
