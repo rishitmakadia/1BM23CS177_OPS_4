@@ -72,8 +72,8 @@ void lru(int pages[], int n, int f) {
             faults++;
         }
 
-        printf("Frames after inserting %d: ", pages[i]);
-        printFrames(frames, f);  
+        // printf("Frames after inserting %d: ", pages[i]);
+        // printFrames(frames, f);  
     }
     printf("LRU - Total Page Faults: %d\n", faults);
 }
@@ -121,8 +121,8 @@ void optimal(int pages[], int n, int f) {
             faults++;
         }
 
-        printf("Frames after inserting %d: ", pages[i]);
-        printFrames(frames, f); 
+        // printf("Frames after inserting %d: ", pages[i]);
+        // printFrames(frames, f); 
     }
     printf("Optimal - Total Page Faults: %d\n", faults);
 }

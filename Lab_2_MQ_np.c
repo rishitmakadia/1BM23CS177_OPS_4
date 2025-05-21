@@ -12,6 +12,17 @@ typedef struct process{
     int aT,bT, pID, cT, tT, wT, priority;
 }proc;
 
+void sort(proc p[], int n){
+    for (int i = 0; i < n - 1; i++) {
+        for (int j = i + 1; j < n; j++) {
+            if (p[i].aT > p[j].aT || (p[i].aT == p[j].aT && p[i].priority > p[j].priority)) {
+                proc temp = p[i];
+                p[i] = p[j];
+                p[j] = temp;
+            }
+        }
+    }
+}
 void completionT(proc p[], int n) {
     int completed = 0, currentTime1 = 0, currentTime2=0;
     int isCompleted[n];
@@ -89,17 +100,6 @@ void MultiQueue(proc arr[], int n){
     
 }
 
-void sort(proc p[], int n){
-    for (int i = 0; i < n - 1; i++) {
-        for (int j = i + 1; j < n; j++) {
-            if (p[i].aT > p[j].aT || (p[i].aT == p[j].aT && p[i].priority > p[j].priority)) {
-                proc temp = p[i];
-                p[i] = p[j];
-                p[j] = temp;
-            }
-        }
-    }
-}
 
 int main(){
     int no;
